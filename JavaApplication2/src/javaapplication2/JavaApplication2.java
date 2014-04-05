@@ -25,40 +25,50 @@ public class JavaApplication2 {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
-         Scanner sc = null;
-         int i = 0;
-         int j = 0;
-         int instructions = 0;
-         String fichier = "C:\\Users\\Marine\\Desktop\\doodle.txt";
-         try{
-            //try{
-                sc = new Scanner(new File(fichier));
-                while(sc.hasNext()) {
-                    for (char c :sc.next().toCharArray()) {
-                        if(c=='#')
-                        {
-                            System.out.println("PAINTSQ "+(i-1)+" "+j+" 0");
-                            instructions++;
-                
-                        }
-                        j++;
+         
+        // On lit le fichier
+        lectureFichier();
+    }
+    
+    // Lecture du fichier
+    public static void lectureFichier()
+    {
+        Scanner sc = null;
+         
+         // Les variables utilisées pour le pb
+         int nbre_intersections = 11348;
+         int nbre_rues = 17958;
+         int nbre_secondes = 54000;
+         int nbre_véhicules = 8;
+         int intersection_depart = 4516;
+         
+         String fichier = "C:\\Users\\Marine\\Desktop\\paris_54000.txt";
+         String ligne = "";
+         int num_ligne = 0;
+
+	BufferedReader ficTexte;
+	try {
+            ficTexte = new BufferedReader(new FileReader(new File(fichier)));
+            if (ficTexte == null) {
+		throw new FileNotFoundException("Fichier non trouvé: "+ fichier);
+            }
+            do {
+		ligne = ficTexte.readLine();
+                if (ligne != null) {
+                    //System.out.println(ligne);
+                    if(num_ligne!=0)
+                    {
+                        
                     }
-                    i++;
-                    j = 0;
-                    
-                }
-            /*} finally {
-                if (sc != null)
-                sc.close();
-            }*/
-                                System.out.println("inst"+instructions);
-
-        } catch (FileNotFoundException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-        }
-
-                
+                    num_ligne++;
+		}
+            } while (ficTexte != null);
+            ficTexte.close();
+	} catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+	} catch (IOException e) {
+            System.out.println(e.getMessage());
+	}
     }
     
 }
