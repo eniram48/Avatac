@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -33,7 +34,6 @@ public class JavaApplication2 {
     // Lecture du fichier
     public static void lectureFichier()
     {
-        Scanner sc = null;
          
          // Les variables utilisées pour le pb
          int nbre_intersections = 11348;
@@ -42,10 +42,29 @@ public class JavaApplication2 {
          int nbre_véhicules = 8;
          int intersection_depart = 4516;
          
+         // Liste de rue
+         ArrayList<Rue> rues = new ArrayList<Rue>();
+         
+         // Liste d'intersections
+         ArrayList<Intersection> intersections = new ArrayList<>();
+         
          String fichier = "C:\\Users\\Marine\\Desktop\\paris_54000.txt";
          String ligne = "";
          int num_ligne = 0;
-
+         
+         String[] groupes_ligne;
+         
+         Rue rue;
+         long latitude;
+         long longitude;
+         
+         Intersection intersection;
+         int intDepart;
+         int intArrivee;
+         int sens;
+         int cout;
+         int longueur;
+         
 	BufferedReader ficTexte;
 	try {
             ficTexte = new BufferedReader(new FileReader(new File(fichier)));
@@ -58,7 +77,27 @@ public class JavaApplication2 {
                     //System.out.println(ligne);
                     if(num_ligne!=0)
                     {
-                        
+                        if(num_ligne<nbre_intersections)
+                        {
+                            // On stocke le nombre de rues
+                            groupes_ligne = ligne.split(" ");
+                            latitude = Long.parseLong(groupes_ligne[0]);
+                            longitude = Long.parseLong(groupes_ligne[1]);
+                            intersection = new Intersection(latitude, longitude);
+                            intersections.add(intersection);
+                        }
+                        else
+                        {
+                            // On stocke le nombre d'intersections
+                            groupes_ligne = ligne.split(" ");
+                            intDepart = Integer.parseInt(groupes_ligne[0]);
+                            intArrivee = Integer.parseInt(groupes_ligne[1]);
+                            sens = Integer.parseInt(groupes_ligne[2]);
+                            cout = Integer.parseInt(groupes_ligne[3]);
+                            longueur = Integer.parseInt(groupes_ligne[4]);
+                            rue = new Rue(intDepart, intArrivee, sens, cout, longueur);
+                            rues.add(rue);
+                        }
                     }
                     num_ligne++;
 		}
